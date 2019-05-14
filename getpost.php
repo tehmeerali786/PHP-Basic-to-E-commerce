@@ -26,7 +26,7 @@
     echo "<br />";
         } else {
         
-        echo "Field is empty - please enter the password";
+        die("Field is empty - please enter the password");
     }
 
 ?>
