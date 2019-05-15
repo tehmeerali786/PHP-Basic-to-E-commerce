@@ -68,6 +68,21 @@
        
    }
 
+    // Delete Button
+
+    if(isset($_POST['btndelete'])) {
+        
+        $delete = $pdo -> prepare("delete from tbl_product where id=" . $_POST['btndelete']);
+        $delete -> execute();
+        
+        if($delete->rowCount()){
+            echo "Data Deleted Successfully";
+        } else {
+            
+            echo "Delete Failed";
+        }
+        
+    } 
 
 ?>
 
@@ -179,7 +194,7 @@
                         <td>  <?php echo $row -> productname ?> </td>
                         <td>  <?php echo $row -> productprice ?> </td>
                         <td> <button type="submit" value="<?php echo $row->id ?>" name="btnedit"><?php echo $row -> id ?></button> </td>
-                        <td> <button type="submit" value="<?php $row->id ?>" name="btndelete">DELETE</button></td>
+                        <td> <button type="submit" value="<?php echo $row->id ?>" name="btndelete">DELETE</button></td>
                         
                         
                     
