@@ -2,12 +2,12 @@
 
  include_once 'connectdb.php';
  session_start();
- if ($_SESSION['useremail'] == "" || $_SESSION['role'] != "Admin" ) {
+ if ($_SESSION['useremail'] == "" || $_SESSION['role'] != "User") {
      
      header('location:index.php');
  }
 
- include_once 'header.php';
+ include_once 'headeruser.php';
 
 ?>
   <!-- Content Wrapper. Contains page content -->
@@ -15,7 +15,7 @@
     <!-- Content Header (Admin Dashboard) -->
     <section class="content-header">
       <h1>
-        Admin Dashboard
+        User Dashboard
         <small></small>
       </h1>
       <ol class="breadcrumb">
