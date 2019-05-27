@@ -86,7 +86,28 @@
             
             header('refresh:1;user.php');
             
-        } 
+        } else {
+            
+            
+            echo '
+            
+                    <script type="text/javascript">
+                    jQuery(function validation() {
+                    
+                    swal({
+                          title: "EMAIL OR PASSWORD IS WRONG",
+                          text: "Details Not Matched",
+                          icon: "error",
+                          button: "Ok ",
+                        });
+                    
+                    });
+                    
+                </script>
+                        ';
+            
+            
+        }
         
         
     }

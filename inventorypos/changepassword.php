@@ -8,7 +8,14 @@ if ( $_SESSION['role'] != "Admin" AND $_SESSION['role'] != "User" ) {
      header('location:index.php');
  }
 
+if ($_SESSION['role'] == 'Admin' ) {
  include_once 'header.php';
+    
+    } else {
+    
+    include_once 'headeruser.php';
+}
+
 
 //when click on update password button, we get out values from user into variables
 
