@@ -6,6 +6,101 @@
 
  include_once 'header.php';
 
+if(isset($_POST['btnsave'])) {
+
+$username = $_POST['txtname'];
+$useremail = $_POST['txtemail'];
+$password = $_POST['txtpassword'];
+$userrole = $_POST['txtselect_option'];
+    
+    //echo $username . "-" . $useremail . "-" . $password . "-" . $userrole;
+    
+    
+    if(isset($_POST['txtemail'])) {
+        
+        
+        $select = $pdo -> prepare("select useremail from tbl_user where useremail = '$useremail'");
+        
+        $select -> execute();
+        
+        if ($select -> rowCount() > 0 ) {
+            
+            echo '
+            
+                    <script type="text/javascript">
+                    jQuery(function validation() {
+                    
+                    swal({
+                          title: "Warning",
+                          text: "Email Already Exist: Please try from different Email !!",
+                          icon: "warning",
+                          button: "Ok",
+                        });
+                    
+                    });
+                    
+                </script>
+                        ';
+            
+        } else {
+            
+            
+                $insert = $pdo -> prepare("insert into tbl_user(username, useremail, password, role) values(:name, :email, :pass, :role)");
+
+                $insert -> bindParam(':name', $username);
+                $insert -> bindParam(':email', $useremail);
+                $insert -> bindParam(':pass', $password);
+                $insert -> bindParam(':role', $userrole);
+
+                if($insert->execute()) {
+
+                    echo '
+            
+                    <script type="text/javascript">
+                    jQuery(function validation() {
+                    
+                    swal({
+                          title: "Good Job!",
+                          text: "Your Registration is Successful !!",
+                          icon: "success",
+                          button: "Ok",
+                        });
+                    
+                    });
+                    
+                </script>
+                        ';
+
+                } else {
+
+
+                    echo '
+            
+                    <script type="text/javascript">
+                    jQuery(function validation() {
+                    
+                    swal({
+                          title: "Error",
+                          text: "Registration Fail !!!",
+                          icon: "error",
+                          button: "Ok",
+                        });
+                    
+                    });
+                    
+                </script>
+                        ';
+                }
+                 }
+            
+        } //end if txtemail
+    }
+    
+    
+    
+    
+    
+
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -28,40 +123,43 @@
         | Your Page Content Here |
         -------------------------->
         
-        <div class="box box-primary">
+        <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Registration Form</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="" method="post">
               <div class="box-body">
                
                    <div class="col-md-4" > 
                    
                     <div class="form-group">
-                  <label for="exampleInputEmail1">Name</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+                  <label >Name</label>
+                  <input type="text" class="form-control" name="txtname" placeholder="Enter Name" required>
                 </div>
                     
                  <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  <label >Email address</label>
+                  <input type="email" class="form-control" name="txtemail" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label >Password</label>
+                  <input type="password" class="form-control" name="txtpassword" placeholder="Password" required>
                 </div>
                 
                 <div class="form-group">
                   <label>Role</label>
-                  <select class="form-control">
-                    <option>Admin</option>
+                  <select class="form-control" name="txtselect_option" required>
+                    <option value="" disabled selected >Select role</option>
                     <option>User</option>
+                    <option>Admin</option>
+                    
                     
                   </select>
                 </div>
                      
+                     <button type="submit" class="btn btn-info" name="btnsave">Save</button>
                       
                        
                     </div>
@@ -78,6 +176,7 @@
                               <th>EMAIL</th>
                               <th>PASSWORD</th>
                               <th>ROLE</th>
+                              <th>DELETE</th>
                           
                           </tr>
                           
@@ -145,7 +244,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                
               </div>
             </form>
           </div>
